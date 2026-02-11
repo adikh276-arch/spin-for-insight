@@ -2,19 +2,42 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import PhoneInput from "react-phone-number-input";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { leadSchema, type LeadFormData } from "@/lib/validation";
 import MantraCareLogo from "@/assets/MantraCare_Logo.svg";
 import { User, Mail, Building2, Phone, ArrowRight, Loader2 } from "lucide-react";
 
+const COUNTRY_CODES = [
+  { code: "+91", name: "India" },
+  { code: "+1", name: "United States" },
+  { code: "+44", name: "United Kingdom" },
+  { code: "+971", name: "UAE" },
+  { code: "+65", name: "Singapore" },
+  { code: "+61", name: "Australia" },
+  { code: "+49", name: "Germany" },
+  { code: "+33", name: "France" },
+  { code: "+81", name: "Japan" },
+  { code: "+86", name: "China" },
+  { code: "+82", name: "South Korea" },
+  { code: "+55", name: "Brazil" },
+  { code: "+27", name: "South Africa" },
+  { code: "+234", name: "Nigeria" },
+  { code: "+254", name: "Kenya" },
+  { code: "+966", name: "Saudi Arabia" },
+  { code: "+974", name: "Qatar" },
+  { code: "+60", name: "Malaysia" },
+  { code: "+63", name: "Philippines" },
+  { code: "+62", name: "Indonesia" },
+];
+
 interface LeadFormProps {
   onSubmit: (data: LeadFormData) => Promise<void>;
 }
 
 const LeadForm = ({ onSubmit }: LeadFormProps) => {
-  const [phone, setPhone] = useState<string>("");
+  const [countryCode, setCountryCode] = useState("+91");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -29,10 +52,18 @@ const LeadForm = ({ onSubmit }: LeadFormProps) => {
     defaultValues: { fullName: "", workEmail: "", phone: "", organizationName: "" },
   });
 
-  const handlePhoneChange = (value: string | undefined) => {
-    const v = value || "";
-    setPhone(v);
-    setValue("phone", v, { shouldValidate: true });
+  const handlePhoneChange = (digits: string) => {
+    const cleaned = digits.replace(/\D/g, "");
+    setPhoneNumber(cleaned);
+    const fullPhone = cleaned ? `${countryCode}${cleaned}` : "";
+    setValue("phone", fullPhone, { shouldValidate: true });
+    trigger("phone");
+  };
+
+  const handleCountryChange = (code: string) => {
+    setCountryCode(code);
+    const fullPhone = phoneNumber ? `${code}${phoneNumber}` : "";
+    setValue("phone", fullPhone, { shouldValidate: true });
     trigger("phone");
   };
 
@@ -115,13 +146,26 @@ const LeadForm = ({ onSubmit }: LeadFormProps) => {
               <Phone className="h-3.5 w-3.5 text-muted-foreground" />
               Phone Number
             </Label>
-            <PhoneInput
-              international
-              defaultCountry="IN"
-              value={phone}
-              onChange={handlePhoneChange}
-              className={errors.phone ? "[&_.PhoneInputInput]:border-destructive" : ""}
-            />
+            <div className="flex gap-2">
+              <select
+                value={countryCode}
+                onChange={(e) => handleCountryChange(e.target.value)}
+                className="h-10 shrink-0 rounded-md border border-input bg-background px-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                {COUNTRY_CODES.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {c.name} ({c.code})
+                  </option>
+                ))}
+              </select>
+              <Input
+                type="tel"
+                placeholder="Phone number"
+                value={phoneNumber}
+                onChange={(e) => handlePhoneChange(e.target.value)}
+                className={`flex-1 ${errors.phone ? "border-destructive" : ""}`}
+              />
+            </div>
             {errors.phone && (
               <p className="mt-1 text-xs text-destructive">{errors.phone.message}</p>
             )}

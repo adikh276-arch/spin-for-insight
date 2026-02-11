@@ -29,6 +29,14 @@ const COUNTRY_CODES = [
   { code: "+60", name: "Malaysia" },
   { code: "+63", name: "Philippines" },
   { code: "+62", name: "Indonesia" },
+  { code: "+1", name: "Canada" },
+  { code: "+34", name: "Spain" },
+  { code: "+39", name: "Italy" },
+  { code: "+31", name: "Netherlands" },
+  { code: "+41", name: "Switzerland" },
+  { code: "+46", name: "Sweden" },
+  { code: "+353", name: "Ireland" },
+  { code: "+64", name: "New Zealand" },
 ];
 
 interface LeadFormProps {
@@ -113,7 +121,7 @@ const LeadForm = ({ onSubmit }: LeadFormProps) => {
             </Label>
             <Input
               id="fullName"
-              placeholder="John Doe"
+              placeholder="Aditya Khandelwal"
               {...register("fullName")}
               className={errors.fullName ? "border-destructive" : ""}
             />
@@ -131,7 +139,7 @@ const LeadForm = ({ onSubmit }: LeadFormProps) => {
             <Input
               id="workEmail"
               type="email"
-              placeholder="you@company.com"
+              placeholder="aditya@mantra.care"
               {...register("workEmail")}
               className={errors.workEmail ? "border-destructive" : ""}
             />
@@ -150,11 +158,11 @@ const LeadForm = ({ onSubmit }: LeadFormProps) => {
               <select
                 value={countryCode}
                 onChange={(e) => handleCountryChange(e.target.value)}
-                className="h-10 shrink-0 rounded-md border border-input bg-background px-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="h-10 w-[100px] shrink-0 rounded-md border border-input bg-background px-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 {COUNTRY_CODES.map((c) => (
-                  <option key={c.code} value={c.code}>
-                    {c.name} ({c.code})
+                  <option key={`${c.name}-${c.code}`} value={c.code}>
+                    {c.code} ({c.name})
                   </option>
                 ))}
               </select>
@@ -179,7 +187,7 @@ const LeadForm = ({ onSubmit }: LeadFormProps) => {
             </Label>
             <Input
               id="organizationName"
-              placeholder="Acme Corp"
+              placeholder="Mantra Care"
               {...register("organizationName")}
               className={errors.organizationName ? "border-destructive" : ""}
             />

@@ -98,10 +98,21 @@
   }
 
   /* Phone input styling */
+  .PhoneInput {
+    @apply flex items-center gap-2;
+  }
   .PhoneInputInput {
     @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
   }
   .PhoneInputCountry {
-    @apply mr-2;
+    @apply flex shrink-0 items-center;
+  }
+  .PhoneInputCountryIcon {
+    width: 24px !important;
+    height: 18px !important;
+  }
+  .PhoneInputCountrySelectArrow {
+    width: 6px !important;
+    height: 6px !important;
   }
 }

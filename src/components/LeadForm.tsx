@@ -121,7 +121,7 @@ const LeadForm = ({ onSubmit }: LeadFormProps) => {
             </Label>
             <Input
               id="fullName"
-              placeholder="Aditya Khandelwal"
+              placeholder="Full Name"
               {...register("fullName")}
               className={errors.fullName ? "border-destructive" : ""}
             />
@@ -139,7 +139,7 @@ const LeadForm = ({ onSubmit }: LeadFormProps) => {
             <Input
               id="workEmail"
               type="email"
-              placeholder="aditya@mantra.care"
+              placeholder="Official Email"
               {...register("workEmail")}
               className={errors.workEmail ? "border-destructive" : ""}
             />
@@ -168,7 +168,7 @@ const LeadForm = ({ onSubmit }: LeadFormProps) => {
               </select>
               <Input
                 type="tel"
-                placeholder="Phone number"
+                placeholder="Phone Number"
                 value={phoneNumber}
                 onChange={(e) => handlePhoneChange(e.target.value)}
                 className={`flex-1 ${errors.phone ? "border-destructive" : ""}`}
@@ -187,7 +187,7 @@ const LeadForm = ({ onSubmit }: LeadFormProps) => {
             </Label>
             <Input
               id="organizationName"
-              placeholder="Mantra Care"
+              placeholder="Organization Name"
               {...register("organizationName")}
               className={errors.organizationName ? "border-destructive" : ""}
             />

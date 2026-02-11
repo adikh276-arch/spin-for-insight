@@ -75,16 +75,28 @@ const Index = () => {
   }, []);
 
   const handleSpinComplete = useCallback(async (wonReward: Reward) => {
-    // Save spin result
-    const { error } = await supabase.from("spins").insert({
+    // Save spin result to spins table
+    const { error: spinError } = await supabase.from("spins").insert({
       lead_id: leadId,
       reward_won: wonReward.name,
       reward_probability: wonReward.probability,
     });
 
-    if (error) {
-      console.error("Failed to save spin:", error);
-      // Still show success even if save fails - the lead is already captured
+    if (spinError) {
+      console.error("Failed to save spin:", spinError);
+    }
+
+    // Also update lead record with the reward result
+    const { error: leadError } = await supabase
+      .from("leads")
+      .update({
+        reward_won: wonReward.name,
+        reward_probability: wonReward.probability
+      })
+      .eq("id", leadId);
+
+    if (leadError) {
+      console.error("Failed to update lead with reward:", leadError);
     }
 
     setReward(wonReward);

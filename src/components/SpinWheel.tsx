@@ -118,13 +118,20 @@ const SpinWheel = ({ onSpinComplete, reward }: SpinWheelProps) => {
                       x={textX}
                       y={textY}
                       fill="white"
-                      fontSize="13"
+                      fontSize="11"
                       fontWeight="600"
                       textAnchor="middle"
-                      dominantBaseline="middle"
                       transform={`rotate(${midAngle}, ${textX}, ${textY})`}
                     >
-                      {r.name}
+                      {r.name.split("\n").map((line, idx, arr) => (
+                        <tspan
+                          key={idx}
+                          x={textX}
+                          dy={idx === 0 ? (arr.length > 1 ? "-0.6em" : "0.35em") : "1.2em"}
+                        >
+                          {line}
+                        </tspan>
+                      ))}
                     </text>
                   </g>
                 );

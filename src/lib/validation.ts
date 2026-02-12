@@ -45,13 +45,19 @@ export interface Reward {
 }
 
 export const REWARDS: Reward[] = [
-  { name: "Orgwide Survey", probability: 0.55, color: "#043570" },
-  { name: "Orgwide Webinar", probability: 0.15, color: "#0a5cad" },
+  {
+    name: `Organisation Wide
+Survey`, probability: 0.55, color: "#043570"
+  },
+  {
+    name: `Organisation Wide
+Webinar`, probability: 0.15, color: "#0a5cad"
+  },
   { name: "Yoga Session", probability: 0.10, color: "#00C0FF" },
   { name: "Group Coaching", probability: 0.10, color: "#0891b2" },
   {
-    name: `session on
-Diversity & Inclusion`, probability: 0.10, color: "#065f8a"
+    name: `Session on
+DE&I`, probability: 0.10, color: "#065f8a"
   },
 ];
 

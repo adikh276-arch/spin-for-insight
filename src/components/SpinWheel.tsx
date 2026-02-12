@@ -34,8 +34,20 @@ const SpinWheel = ({ onSpinComplete, reward }: SpinWheelProps) => {
 
     setRotation(totalRotation);
 
+    // Play spin sound
+    const spinSound = document.getElementById("spin-sound") as HTMLAudioElement;
+    if (spinSound) {
+      spinSound.currentTime = 0;
+      spinSound.play().catch(e => console.error("Audio error:", e));
+    }
+
     setTimeout(() => {
       setSpinning(false);
+      // Play win sound
+      const winSound = document.getElementById("win-sound") as HTMLAudioElement;
+      if (winSound) {
+        winSound.play().catch(e => console.error("Audio error:", e));
+      }
       onSpinComplete(reward);
     }, 4500);
   }, [spinning, reward, onSpinComplete]);
@@ -118,8 +130,8 @@ const SpinWheel = ({ onSpinComplete, reward }: SpinWheelProps) => {
                       x={textX}
                       y={textY}
                       fill="white"
-                      fontSize="11"
-                      fontWeight="600"
+                      fontSize="14"
+                      fontWeight="800"
                       textAnchor="middle"
                       transform={`rotate(${midAngle}, ${textX}, ${textY})`}
                     >
@@ -143,6 +155,10 @@ const SpinWheel = ({ onSpinComplete, reward }: SpinWheelProps) => {
             </svg>
           </div>
         </div>
+
+        {/* Audio Elements */}
+        <audio id="spin-sound" src="https://www.soundjay.com/misc/sounds/spinning-wheel-1.mp3" preload="auto" />
+        <audio id="win-sound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" preload="auto" />
 
         {/* Spin button */}
         <motion.button

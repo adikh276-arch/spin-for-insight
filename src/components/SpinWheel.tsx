@@ -114,8 +114,8 @@ const SpinWheel = ({ onSpinComplete, reward }: SpinWheelProps) => {
                 // Text angle at midpoint
                 const midAngle = startAngle + SEGMENT_ANGLE / 2;
                 const textRad = (midAngle * Math.PI) / 180;
-                const textX = 200 + 130 * Math.cos(textRad);
-                const textY = 200 + 130 * Math.sin(textRad);
+                const textX = 200 + 110 * Math.cos(textRad);
+                const textY = 200 + 110 * Math.sin(textRad);
 
                 return (
                   <g key={r.name}>
